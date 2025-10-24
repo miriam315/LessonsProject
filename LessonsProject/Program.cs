@@ -14,6 +14,10 @@ namespace LessonsProject
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddScoped<IDataContext, DataContext>();//יוצר  מופע לכל בקשה
+            builder.Services.AddSingleton<IDataContext, DataContext>();//יוצר מופע אחד לכל האפליקציה
+           builder.Services.AddTransient<IDataContext, DataContext>();//יוצר מופע חדש בכל פעם שיהיה רשום את הדרישה למופע
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

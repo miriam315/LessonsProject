@@ -9,10 +9,7 @@ namespace LessonsProject.Controllers
     [ApiController]
     public class LessonController : ControllerBase
     {
-        public static List<Lesson> lessons = new List<Lesson>()
-        {
-            new Lesson { Id = 1, Title = "תנ\"ך – פרשת השבוע", TeacherId = 1, Date = DateTime.Parse("2025-10-25"), Duration = 90, Description = "לימוד פרשת השבוע" }
-        };
+       
         // GET: api/<LessonController>
         [HttpGet]
         public IEnumerable<Lesson> Get()

@@ -9,11 +9,7 @@ namespace LessonsProject.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private static List<User> users = new List<User>()
-        {
-            new User { Id = 1, Name = "ישראל כהן", Role = "teacher", Email = "israel@example.com" },
-            new User { Id = 2, Name = "שרה לוי", Role = "student", Email = "sara@example.com" }
-        };
+        
         // GET: api/<UserController>
         [HttpGet]
         public IEnumerable<User> Get()

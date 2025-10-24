@@ -9,7 +9,7 @@ namespace LessonsProject.Controllers
     [ApiController]
     public class MaterialController : ControllerBase
     {
-        public static List<Material> materialsList = new List<Material>();
+        
         // GET: api/<MaterialController>
         [HttpGet]
         public IEnumerable<Material> Get(int lessonId) => materialsList.Where(m => m.LessonId == lessonId);

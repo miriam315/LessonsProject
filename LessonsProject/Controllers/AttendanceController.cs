@@ -9,7 +9,7 @@ namespace LessonsProject.Controllers
     [ApiController]
     public class AttendanceController : ControllerBase
     {
-        public static List<Attendance> attendanceList = new List<Attendance>();
+        
         // GET: api/<AttendanceController>
         [HttpGet]
         public IEnumerable<Attendance> Get(int lessonId) => attendanceList.Where(a => a.LessonId == lessonId);
