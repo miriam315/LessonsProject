@@ -9,19 +9,23 @@ namespace LessonsProject.Controllers
     [ApiController]
     public class LessonController : ControllerBase
     {
-       
+        public IDataContext _context { get; set; }
+        public LessonController(IDataContext context)
+        {
+            _context = context;
+        }
         // GET: api/<LessonController>
         [HttpGet]
         public IEnumerable<Lesson> Get()
         {
-            return lessons;
+            return _context.lessons;
         }
 
         // GET api/<LessonController>/5
         [HttpGet("{id}")]
         public ActionResult Get(int id)
         {
-            var lesson = lessons.FirstOrDefault(l => l.Id == id)!;
+            var lesson = _context.lessons.FirstOrDefault(l => l.Id == id)!;
             if(lesson != null)
                 return Ok(lesson);
             return NotFound();
@@ -29,34 +33,43 @@ namespace LessonsProject.Controllers
 
         // POST api/<LessonController>
         [HttpPost]
-        public void Post([FromBody] Lesson value)
+        public ActionResult Post([FromBody] Lesson value)
         {
-            value.Id = lessons.Count + 1;
-            lessons.Add(value);
+            var l =_context.lessons.FirstOrDefault(x=>x.Id == value.Id);
+            if(l != null)
+                return Conflict();
+            _context.lessons.Add(value);
+            return Ok();
         }
 
         // PUT api/<LessonController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Lesson value)
+        public ActionResult Put(int id, [FromBody] Lesson value)
         {
-            var index = lessons.FindIndex(l => l.Id == id);
+            var index = _context.lessons.FindIndex(l => l.Id == id);
             if (index >= 0)
             {
-                lessons[index].Title = value.Title;
-                lessons[index].TeacherId = value.TeacherId;
-                lessons[index].Date = value.Date;
-                lessons[index].Duration = value.Duration;
-                lessons[index].Description = value.Description;
+                _context.lessons[index].Title = value.Title;
+                _context.lessons[index].TeacherId = value.TeacherId;
+                _context.lessons[index].Date = value.Date;
+                _context.lessons[index].Duration = value.Duration;
+                _context.lessons[index].Description = value.Description;
+                return Ok();
             }
+            return BadRequest();
         }
 
         // DELETE api/<LessonController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
-            var lesson = lessons.FirstOrDefault(l => l.Id == id);
+            var lesson = _context.lessons.FirstOrDefault(l => l.Id == id);
             if (lesson != null)
-                lessons.Remove(lesson);
+            {
+                _context.lessons.Remove(lesson);
+                return Ok();
+            }
+            return BadRequest();
         }
     }
 }

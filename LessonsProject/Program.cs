@@ -14,9 +14,9 @@ namespace LessonsProject
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddScoped<IDataContext, DataContext>();//йецш  оефт млм бчщд
-            builder.Services.AddSingleton<IDataContext, DataContext>();//йецш оефт азг млм дафмйчцйд
-           builder.Services.AddTransient<IDataContext, DataContext>();//йецш оефт згщ блм фтн щйдйд шщен аъ дгшйщд моефт
+            //builder.Services.AddScoped<IDataContext, DataContext>();//пїЅпїЅпїЅпїЅ  пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+            builder.Services.AddSingleton<IDataContext, DataContext>();//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            //builder.Services.AddTransient<IDataContext, DataContext>();//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 
             var app = builder.Build();
 

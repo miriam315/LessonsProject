@@ -9,10 +9,15 @@ namespace LessonsProject.Controllers
     [ApiController]
     public class AttendanceController : ControllerBase
     {
-        
+        public IDataContext _context { get; set; }
+        public AttendanceController(IDataContext context)
+        {
+            _context = context;
+        }
+
         // GET: api/<AttendanceController>
         [HttpGet]
-        public IEnumerable<Attendance> Get(int lessonId) => attendanceList.Where(a => a.LessonId == lessonId);
+        public IEnumerable<Attendance> Get(int lessonId) => _context.attendances.Where(a => a.LessonId == lessonId);
 
 
         // GET api/<AttendanceController>/5
@@ -24,31 +29,39 @@ namespace LessonsProject.Controllers
 
         // POST api/<AttendanceController>
         [HttpPost]
-        public void Post(int lessonId, [FromBody] Attendance value)
+        public ActionResult Post(int lessonId, [FromBody] Attendance value)
         {
-            value.Id = attendanceList.Count + 1;
-            value.LessonId = lessonId;
-            attendanceList.Add(value);
+            var attendance = _context.attendances.Find(a => a.Id == value.Id && a.LessonId == lessonId);
+            if (attendance != null)
+                return Ok(attendance);
+            return NotFound();
         }
 
         // PUT api/<AttendanceController>/5
         [HttpPut("{id}")]
-        public void Put(int lessonId, int id, [FromBody] Attendance value)
+        public ActionResult Put(int lessonId, int id, [FromBody] Attendance value)
         {
-            var index = attendanceList.FindIndex(a => a.Id == id && a.LessonId == lessonId);
+            var index = _context.attendances.FindIndex(a => a.Id == id && a.LessonId == lessonId);
             if (index >= 0)
             {
-                attendanceList[index].StudentId = value.StudentId;
-                attendanceList[index].Status = value.Status;
+                _context.attendances[index].StudentId = value.StudentId;
+                _context.attendances[index].Status = value.Status;
+                return Ok();
             }
+            return BadRequest();
         }
 
         // DELETE api/<AttendanceController>/5
         [HttpDelete("{id}")]
-        public void Delete(int lessonId, int id)
+        public ActionResult Delete(int lessonId, int id)
         {
-            var record = attendanceList.FirstOrDefault(a => a.Id == id && a.LessonId == lessonId);
-            if (record != null) attendanceList.Remove(record);
+            var record = _context.attendances.FirstOrDefault(a => a.Id == id && a.LessonId == lessonId);
+            if (record != null)
+            {
+                _context.attendances.Remove(record);
+                return Ok();
+            }
+            return BadRequest();
         }
     }
 }
