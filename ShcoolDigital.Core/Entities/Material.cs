@@ -1,4 +1,4 @@
-﻿namespace LessonsProject.Entities
+﻿namespace SchoolDigital.Entities
 {
     public class Material
     {
